@@ -35,12 +35,17 @@ public class FirebaseConfig {
             .setDatabaseUrl("https://catfriends-91f48.firebaseio.com")
             .build();
 
-    FirebaseApp app = FirebaseApp.initializeApp(options);
+//    FirebaseApp app = FirebaseApp.initializeApp(options);
+
+    public void initial(){
+        FirebaseApp app = FirebaseApp.initializeApp(options);
+    }
+
 
 
     //database
-    FirebaseDatabase database = FirebaseDatabase.getInstance().getReference()
-            .getDatabase();
+//    FirebaseDatabase database = FirebaseDatabase.getInstance().getReference()
+//            .getDatabase();
 
 
 
