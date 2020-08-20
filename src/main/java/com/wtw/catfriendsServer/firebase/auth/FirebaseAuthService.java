@@ -4,10 +4,12 @@ package com.wtw.catfriendsServer.firebase.auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class FirebaseAuthService {
 
     //사용자 데이터 검색
