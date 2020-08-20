@@ -1,8 +1,8 @@
 package com.wtw.catfriendsServer.api.controller;
 
 import com.wtw.catfriendsServer.api.service.PushNotificationService;
-import com.wtw.catfriendsServer.firebase.model.PushNotificationRequest;
-import com.wtw.catfriendsServer.firebase.model.PushNotificationResponse;
+import com.wtw.catfriendsServer.api.domain.PushNotificationRequest;
+import com.wtw.catfriendsServer.api.domain.PushNotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.wtw.catfriendsServer.firebase.fcm;
 
 import com.google.firebase.messaging.*;
-import com.wtw.catfriendsServer.firebase.model.PushNotificationRequest;
+import com.wtw.catfriendsServer.api.domain.PushNotificationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,10 +50,12 @@ public class FCMService {
     }
 
     private Message.Builder getPreconfiguredMessageBuilder(PushNotificationRequest req){
+        // ios를 다루지 않으므로 필요 없는 코드들 주석처리
         AndroidConfig androidConfig = getAndroidConfig(req.getTopic());
-        ApnsConfig apnsConfig = getApnsConfig(req.getTopic());
+//        ApnsConfig apnsConfig = getApnsConfig(req.getTopic());
         return Message.builder()
-                .setAndroidConfig(androidConfig).setApnsConfig(apnsConfig)
+                .setAndroidConfig(androidConfig)
+//                .setApnsConfig(apnsConfig)
                 .setNotification(
                         Notification.builder()
                                 .setTitle(req.getTitle())
@@ -71,7 +73,7 @@ public class FCMService {
                 .setTag(topic).build()).build();
     }
 
-    private ApnsConfig getApnsConfig(String topic){
+    private ApnsConfig getApnsConfig(String topic){ //ios 인증
         return ApnsConfig.builder()
                 .setAps(Aps.builder().setCategory(topic).setThreadId(topic).build())
                 .build();

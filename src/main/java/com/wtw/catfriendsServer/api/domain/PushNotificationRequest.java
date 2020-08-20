@@ -1,4 +1,4 @@
-package com.wtw.catfriendsServer.firebase.model;
+package com.wtw.catfriendsServer.api.domain;
 
 import lombok.*;
 
