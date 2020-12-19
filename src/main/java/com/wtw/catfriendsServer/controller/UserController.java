@@ -46,10 +46,6 @@ public class UserController {
     }
 
 
-//    public ResponseEntity<?> getUser(@RequestHeader("uid") String uid){
-//        return new ResponseEntity<>(userService.getUser(uid), HttpStatus.OK);
-//    }
-
     @PutMapping
     public ResponseEntity<?> storeUser(@RequestHeader("uid") String uid, @RequestBody UserDto dto){
         UserDto result = userService.storeUser(uid, dto);
@@ -107,6 +103,6 @@ public class UserController {
         mailService.updateUserMailListDeleteInitial(user);
         return new ResponseEntity<>(mailService.getUserMailListExcludingDeleteMail(user), HttpStatus.OK);
     }
-    */
+*/
 
 }
