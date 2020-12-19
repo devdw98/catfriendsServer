@@ -77,4 +77,10 @@ public class UserMail {
                 .build();
         return dto;
     }
+
+    public void update(UserMailDto dto){
+        this.isDelete = dto.getDelete();
+        this.isRead = dto.getRead();
+        this.readTime = LocalDateTime.now();
+    }
 }

@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         userCouponService.storeUserCoupon(req, user);
         pcService.storePCInfo(req.getProtectionCenter(), user);
         questService.storeQuestInfo(req.getQuest(), user);
+        mailService.storeUserMailData(req.getMailList(), user);
 
         userRepository.save(user);
 
@@ -112,7 +113,8 @@ public class UserServiceImpl implements UserService {
         result.setProtectionCenter(pcService.getPCInfoDto(user));
         result.setCatDog(friendService.getCatDogDtos(user));
         result.setAnimal(friendService.getAnimalDtos(user));
-        result.setMailList(mailService.getUserMailList(user));
+    //    result.setMailList(mailService.getUserMailList(user));
+        result.setMailList(mailService.getUserMailListExcludingDeleteMail(user));
 
         return result;
     }

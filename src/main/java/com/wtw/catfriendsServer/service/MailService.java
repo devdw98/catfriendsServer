@@ -17,7 +17,8 @@ public interface MailService {
     public List<UserMailDto> getUserMailListExcludingDeleteMail(User user);
 
     //데이터 저장
-    public boolean storeUserMailData(User user,List<UserMailDto> req);
+    public void storeUserMailData(List<UserMailDto> dto, User user);
+
     public List<UserMail> getUserMail(User user);
 
     public List<MailDto> getMailList();

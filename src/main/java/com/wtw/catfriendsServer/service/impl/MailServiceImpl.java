@@ -46,18 +46,15 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional
-    public boolean storeUserMailData(User user, List<UserMailDto> req) {
-        List<UserMail> entity = userMailRepository.findAllByUser(user);
-        for(UserMailDto d : req){
-            for(UserMail m : entity){
+    public void storeUserMailData(List<UserMailDto> dto, User user) {
+    //    List<UserMail> entity = userMailRepository.findAllByUser(user);
+        for(UserMailDto d : dto){
+            for(UserMail m : user.getMails()){
                 if(d.getId().equals(m.getMail().getId()))
-                    System.out.println(); //고치기
-                //    m.update(d);
+                //    System.out.println("test!!!!!"); //고치기
+                    m.update(d);
             }
         }
-        if(userMailRepository.saveAll(entity).isEmpty())
-            return false;
-        return true;
     }
 
     @Override
