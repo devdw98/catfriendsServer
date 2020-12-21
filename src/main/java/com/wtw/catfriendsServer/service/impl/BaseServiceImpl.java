@@ -1,7 +1,7 @@
 package com.wtw.catfriendsServer.service.impl;
 
 import com.wtw.catfriendsServer.domain.user.Chunbae;
-import com.wtw.catfriendsServer.domain.user.RSPGame;
+import com.wtw.catfriendsServer.domain.user.NyanNyaLand;
 import com.wtw.catfriendsServer.domain.user.Setting;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.UserDto;
@@ -30,7 +30,7 @@ public class BaseServiceImpl implements BaseService {
     public void initial(User user) {
         chunbaeRepository.save(new Chunbae(user));
         settingRepository.save(new Setting(user));
-        rspGameRepository.save(new RSPGame(user));
+        rspGameRepository.save(new NyanNyaLand(user));
     }
 
     @Override
@@ -44,18 +44,18 @@ public class BaseServiceImpl implements BaseService {
         Setting setting = Setting.builder()
                 .soundBg(dto.getSoundBgFloat())
                 .soundEf(dto.getSoundEffectFloat())
-                .vibration(dto.getVibration())
+                .vibration(false) //dto.getVibration())
                 .language(dto.getLanguage())
                 .user(user)
                 .build();
-        RSPGame game = RSPGame.builder()
+        NyanNyaLand land = NyanNyaLand.builder()
                 .winCount(dto.getRspGame().getWinCount())
-                .nyanCoin(dto.getRspGame().getNyanCoin())
-                .nyanNyaTicket(dto.getRspGame().getNyanNyaTicket())
+                .nyanCoin(dto.getNyanNyaLand().getCoin())
+                .nyanNyaTicket(dto.getNyanNyaLand().getTicket())
                 .user(user).build();
         chunbaeRepository.save(chunbae);
         settingRepository.save(setting);
-        rspGameRepository.save(game);
+        rspGameRepository.save(land);
     }
 
     @Override
@@ -71,6 +71,6 @@ public class BaseServiceImpl implements BaseService {
     public void storeBaseInfoDto(UserDto dto, User user) {
         user.getChunbae().update(dto);
         user.getSetting().update(dto);
-        user.getRsp().update(dto.getRspGame());
+    //    user.getRsp().update(dto.getRspGame());
     }
 }

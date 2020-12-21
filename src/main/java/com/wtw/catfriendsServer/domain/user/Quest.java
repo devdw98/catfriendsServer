@@ -24,8 +24,8 @@ public class Quest {
     @Column(name = "QUEST_LV")
     private int questLv;
 
-    @Column(name = "IS_QUEST_CONVERSATION_END")
-    private Boolean isQuestConversationEnd;
+    @Column(name = "IS_COMPLETE_QUEST")
+    private Boolean isCompleteQuest;
 
     @Column(name = "DAILY_CLEAR_ALL")
     private int clearAll;
@@ -81,7 +81,7 @@ public class Quest {
 
     public Quest(User user){
         this.questLv = 1;
-        this.isQuestConversationEnd = false;
+        this.isCompleteQuest = false;
         this.clearAll = 0;
         this.attend = 1;
         this.furnitureUpgrade = 0;
@@ -101,7 +101,7 @@ public class Quest {
     @Builder
     public Quest(User user, int lv, boolean isEnd, QuestDto dto){
         this.questLv = lv;
-        this.isQuestConversationEnd = isEnd;
+        this.isCompleteQuest = isEnd;
         this.clearAll = dto.getClearAllQuestCount_daily();
         this.attend = dto.getAttend_daily();
         this.furnitureUpgrade = dto.getFurnitureUpgrade_daily();
@@ -110,7 +110,7 @@ public class Quest {
         this.customerTouchDaily = dto.getCustomerTouch_daily();
         this.touchChallenge = dto.getTouchCount_challenge();
         this.feverChallenge = dto.getFeverCount_challenge();
-        this.catdogChallenge = dto.getCatCount_challenge();
+        this.catdogChallenge = dto.getCatdogCount_challenge();
         this.catdogBatchChallenge = dto.getCatdogBatchCount_challenge();
         this.animalChallenge = dto.getAnimalCount_challenge();
         this.goodPointChallenge = dto.getGoodPoint_challenge();
@@ -128,7 +128,7 @@ public class Quest {
         this.customerTouchDaily = dto.getCustomerTouch_daily();
         this.touchChallenge = dto.getTouchCount_challenge();
         this.feverChallenge = dto.getFeverCount_challenge();
-        this.catdogChallenge = dto.getCatCount_challenge();
+        this.catdogChallenge = dto.getCatdogCount_challenge();
         this.catdogBatchChallenge = dto.getCatdogBatchCount_challenge();
         this.animalChallenge = dto.getAnimalCount_challenge();
         this.goodPointChallenge = dto.getGoodPoint_challenge();

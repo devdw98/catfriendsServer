@@ -32,7 +32,7 @@ public class User {
     private double money;
 
     @Column(name = "DIA", columnDefinition = "double default 0")
-    private double dia;
+    private int dia;
 
     @Column(name = "HEART", columnDefinition = "bigint default 0")
     private int heart;
@@ -64,7 +64,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade={CascadeType.ALL})
     @JsonManagedReference
-    private RSPGame rsp;
+    private NyanNyaLand rsp;
 
     @OneToOne(mappedBy = "user")
     @JsonManagedReference
@@ -119,7 +119,7 @@ public class User {
     }
 
     @Builder
-    public User(String uid, double money, double dia, int heart, double curAddMoney,
+    public User(String uid, double money, int dia, int heart, double curAddMoney,
                 LocalDateTime curTime, LocalDateTime saveTime) {
         this.uid = uid;
         this.money = money;

@@ -21,8 +21,11 @@ public class CatDog {
     @Column(name = "CATDOG_ID")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+//    @Column(name = "name")
+//    private String name;
+
+    @Column(name = "USER_CATDOG_ID")
+    private int userCatdogId;
 
     @Column(name = "LEVEL")
     private int level;
@@ -31,25 +34,27 @@ public class CatDog {
     private Boolean isRetention;
 
     @Column(name = "BATCH_LOCATION")
-    @Enumerated
-    private StoreType batchLocation;
+    private int batchLocation;
+  //  @Enumerated
+  //  private StoreType batchLocation;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     @JsonBackReference
     private User user;
 
-    public CatDog (User user, String name){
+    public CatDog (User user){
         this.user = user;
-        this.name = name;
+    //    this.name = name;
         this.level = 1;
         this.isRetention = false;
-        this.batchLocation = StoreType.NONE;
+        this.batchLocation = -1;
+    //    this.batchLocation = StoreType.NONE;
     }
 
     public CatDogDto toDto(){
         CatDogDto dto = CatDogDto.builder()
-                .name(getName())
+        //        .name(getName())
                 .level(getLevel())
                 .isRetention(getIsRetention())
                 .batchLocation(getBatchLocation())
@@ -58,8 +63,9 @@ public class CatDog {
     }
 
     @Builder
-    public CatDog(String name, int level, Boolean isRetention, StoreType batchLocation, User user) {
-        this.name = name;
+    public CatDog(int id, int level, Boolean isRetention, int batchLocation, User user) {
+    //    this.name = name;
+        this.userCatdogId = id;
         this.level = level;
         this.isRetention = isRetention;
         this.batchLocation = batchLocation;

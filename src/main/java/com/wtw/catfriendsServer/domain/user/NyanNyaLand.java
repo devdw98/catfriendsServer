@@ -10,17 +10,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Game_RSP")
+@Table(name = "NYANNYALAND")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RSPGame {
+public class NyanNyaLand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RSP_ID")
+    @Column(name = "NYANNYALAND_ID")
     private Long id;
-
-    @Column(name = "WIN_COUNT")
-    private int winCount;
 
     @Column(name = "TICKET")
     private int nyanNyaTicket;
@@ -28,12 +25,15 @@ public class RSPGame {
     @Column(name = "COIN")
     private int nyanCoin;
 
+    @Column(name = "WIN_COUNT")
+    private int winCount;
+
     @OneToOne
     @JoinColumn(name = "USER_ID")
     @JsonBackReference
     private User user;
 
-    public RSPGame(User user){
+    public NyanNyaLand(User user){
         this.winCount = 0;
         this.nyanNyaTicket = 0;
         this.nyanCoin = 0;
@@ -42,14 +42,14 @@ public class RSPGame {
     public RSPGameDto toDto(){
         RSPGameDto dto = RSPGameDto.builder()
                 .winCount(getWinCount())
-                .nyanNyaTicket(getNyanNyaTicket())
-                .nyanCoin(getNyanCoin())
+        //        .nyanNyaTicket(getNyanNyaTicket())
+        //        .nyanCoin(getNyanCoin())
                 .build();
         return dto;
     }
 
     @Builder
-    public RSPGame(int winCount, int nyanNyaTicket, int nyanCoin, User user) {
+    public NyanNyaLand(int winCount, int nyanNyaTicket, int nyanCoin, User user) {
         this.winCount = winCount;
         this.nyanNyaTicket = nyanNyaTicket;
         this.nyanCoin = nyanCoin;
@@ -58,7 +58,7 @@ public class RSPGame {
 
     public void update(RSPGameDto dto){
         this.winCount = dto.getWinCount();
-        this.nyanCoin = dto.getNyanCoin();
-        this.nyanNyaTicket = dto.getNyanNyaTicket();
+    //    this.nyanCoin = dto.getNyanCoin();
+    //    this.nyanNyaTicket = dto.getNyanNyaTicket();
     }
 }

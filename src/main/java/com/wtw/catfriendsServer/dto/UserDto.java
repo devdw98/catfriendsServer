@@ -1,5 +1,6 @@
 package com.wtw.catfriendsServer.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.wtw.catfriendsServer.domain.enums.Language;
 import com.wtw.catfriendsServer.domain.user.Chunbae;
 import com.wtw.catfriendsServer.domain.user.Setting;
@@ -14,33 +15,34 @@ import java.util.List;
 @Data
 @Builder
 public class UserDto {
-    private double money;
-    private double dia;
-    private int heart;
-    private double curAddMoney;
-    private LocalDateTime curTime;
-    private LocalDateTime saveTime;
+    private double money; //
+    private int dia;//
+    private int heart;//
+    private double curAddMoney;//
+    private LocalDateTime curTime;//
+    private LocalDateTime saveTime;//
 
-    private int chunbaeLv;
-    private int staminaDrinkAmount;
-    private int maxStamina;
-    private int curStamina;
-    private float soundBgFloat;
-    private float soundEffectFloat;
+    private int chunbaeLv;//
+    private int staminaDrinkAmount;//
+    private int maxStamina;//
+    private int curStamina;//
+    private float soundBgFloat;//
+    private float soundEffectFloat;//
     private Boolean vibration;
-    private Language language;
+    private Language language;//
 
-    private List<String> couponNumber;
-    private List<Boolean> isUsedCoupon;
+    private List<String> couponNumber;//
+    private List<Boolean> isUsedCoupon;//
 
-    private StoreDto store;
-    private RSPGameDto rspGame;
-    private int questLv;
-    private Boolean isQuestConversationEnd;
-    private QuestDto quest;
-    private ProtectCenterDto protectionCenter;
-    private List<CatDogDto> catDog;
-    private List<AnimalDto> animal;
+    private StoreDto store; //
+    private NyanNyaLandDto nyanNyaLand;//
+    private RSPGameDto rspGame;//
+    private int questLv;//
+    private Boolean isCompleteQuest;//
+    private QuestDto quest;//
+    private ProtectCenterDto protectionCenter;//
+    private List<CatDogDto> catdog;//
+    private List<AnimalDto> animal;//
     private List<UserMailDto> mailList;
 
     public User toEntity(String uid){

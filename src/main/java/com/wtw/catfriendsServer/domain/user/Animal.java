@@ -1,6 +1,7 @@
 package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.wtw.catfriendsServer.domain.enums.PcType;
 import com.wtw.catfriendsServer.domain.enums.StoreType;
 import com.wtw.catfriendsServer.dto.AnimalDto;
 import lombok.AccessLevel;
@@ -20,6 +21,9 @@ public class Animal {
     @Column(name = "ANIMAL_ID")
     private Long id;
 
+    @Column(name = "USER_ANIMAL_ID")
+    private int userAnimalId;
+
     @Column(name = "LEVEL")
     private int level;
 
@@ -29,41 +33,41 @@ public class Animal {
     @Column(name = "SORTING_ORDER")
     private int sortingOrder;
 
-    @Column(name = "SKILL")
+    @Column(name = "TYPE")
     @Enumerated
-    private StoreType skill;
+    private PcType type;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     @JsonBackReference
     private User user;
 
-    public Animal(User user, StoreType skill){
+    public Animal(User user, PcType type){
         this.level = 1;
         this.isRetention = false;
         this.sortingOrder = -1;
         this.user = user;
-        this.skill = skill;
+        this.type = type;
     }
 
     public AnimalDto toDto(){
         AnimalDto dto = AnimalDto.builder()
-                .animalId(getId())
+        //        .animalId(getId())
                 .level(getLevel())
                 .isRetention(getIsRetention())
                 .sortingOrder(getSortingOrder())
-                .skill(getSkill())
+                .type(getType())
                 .build();
         return dto;
     }
 
     @Builder
-    public Animal(Long id, int level, Boolean isRetention, int sortingOrder, StoreType skill, User user) {
-        this.id = id;
+    public Animal(int id, int level, Boolean isRetention, int sortingOrder, PcType type, User user) {
+        this.userAnimalId = id;
         this.level = level;
         this.isRetention = isRetention;
         this.sortingOrder = sortingOrder;
-        this.skill = skill;
+        this.type = type;
         this.user = user;
     }
 
