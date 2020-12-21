@@ -42,6 +42,29 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
+    public void initialClientData(User user, List<CatDogDto> catdogs, List<AnimalDto> animals) {
+        CatDog catdog = null;
+        Animal animal = null;
+        for(CatDogDto d : catdogs){
+            catdog = CatDog.builder()
+                    .level(d.getLevel())
+                    .isRetention(d.getIsRetention())
+                    .batchLocation(d.getBatchLocation())
+                    .user(user)
+                    .build();
+            catDogRepository.save(catdog);
+        }
+        for(AnimalDto d : animals){
+            animal = Animal.builder()
+                    .level(d.getLevel())
+                    .sortingOrder(d.getSortingOrder())
+                    .isRetention(d.getIsRetention())
+                    .build();
+            animalRepository.save(animal);
+        }
+    }
+
+    @Override
     public List<CatDogDto> getCatDogDtos(User user) {
         List<CatDogDto> result = new ArrayList<>();
         List<CatDog> catDogs = catDogRepository.findAllByUser(user);

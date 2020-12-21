@@ -96,6 +96,16 @@ public class User {
         this.saveTime = LocalDateTime.now();
     }
 
+    public User(String uid, UserDto dto){
+        this.uid = uid;
+        this.money = dto.getMoney();
+        this.dia = dto.getDia();
+        this.heart = dto.getHeart();
+        this.curAddMoney = dto.getCurAddMoney();
+        this.curTime = dto.getCurTime();
+        this.saveTime = dto.getSaveTime();
+    }
+
     public UserDto toDto(){
         UserDto dto = UserDto.builder()
                 .money(getMoney())

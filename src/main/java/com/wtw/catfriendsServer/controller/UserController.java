@@ -28,21 +28,44 @@ public class UserController {
     private final UserService userService;
     private final AuthService authService;
 
-    @GetMapping
-    public ResponseEntity<?> signIn(@RequestHeader("uid") String uid){ //중복체크하기
+    @GetMapping("/check")
+    public ResponseEntity<?> checkUser(@RequestHeader("uid") String uid){ //중복체크
         String firebase;
-        UserDto result = null;
+        boolean result = false;
         try{
             firebase = authService.getUser(uid).getUid();
-            if(!userService.checkDuplicateUser(firebase))
-                result = userService.initial(firebase);
-            else
-                result = userService.getUser(uid);
-            
+            result = userService.checkDuplicateUser(firebase);
         }catch (FirebaseAuthException e){
             log.error(e.getErrorCode());
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> join(@RequestHeader("uid") String uid, @RequestBody UserDto dto){ //회원가입
+        String firebase;
+        boolean result = false;
+        try{
+            firebase = authService.getUser(uid).getUid();
+            result = userService.initialClientData(firebase, dto);
+        }catch (FirebaseAuthException e){
+            log.error(e.getErrorCode());
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> login(@RequestHeader("uid") String uid){
+        String firebase;
+        UserDto result;
+        try{
+            firebase = authService.getUser(uid).getUid();
+            result = userService.getUser(firebase);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (FirebaseAuthException e){
+            log.error(e.getErrorCode());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

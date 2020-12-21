@@ -48,11 +48,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkDuplicateUser(String uid){
-        if(userRepository.findByUid(uid)!=null) //회원정보 있음
+    @Transactional
+    public boolean initialClientData(String uid, UserDto dto){
+        try{
+            User user = userRepository.save(new User(uid, dto));
+            baseService.initialClientData(user, dto);
+            storeService.initialClientData(user, dto.getStore());
+            questService.initialClientData(user, dto.getQuestLv(), dto.getIsQuestConversationEnd(), dto.getQuest());
+            pcService.initialClientData(user, dto.getProtectionCenter());
+            friendService.initialClientData(user, dto.getCatDog(), dto.getAnimal());
             return true;
-        else
-            return false; //회원정보 없음
+        }catch (IllegalArgumentException e){
+            log.error(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkDuplicateUser(String uid){
+        return userRepository.existsByUid(uid);
     }
 
     @Override

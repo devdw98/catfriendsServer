@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wtw.catfriendsServer.dto.QuestDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -95,6 +96,27 @@ public class Quest {
         this.goodPointChallenge = 0;
         this.giveChallenge = 0;
         this.user = user;
+    }
+
+    @Builder
+    public Quest(User user, int lv, boolean isEnd, QuestDto dto){
+        this.questLv = lv;
+        this.isQuestConversationEnd = isEnd;
+        this.clearAll = dto.getClearAllQuestCount_daily();
+        this.attend = dto.getAttend_daily();
+        this.furnitureUpgrade = dto.getFurnitureUpgrade_daily();
+        this.chunbaeLvUp = dto.getChunbaeLvUp_daily();
+        this.touchDaily = dto.getTouch_daily();
+        this.customerTouchDaily = dto.getCustomerTouch_daily();
+        this.touchChallenge = dto.getTouchCount_challenge();
+        this.feverChallenge = dto.getFeverCount_challenge();
+        this.catdogChallenge = dto.getCatCount_challenge();
+        this.catdogBatchChallenge = dto.getCatdogBatchCount_challenge();
+        this.animalChallenge = dto.getAnimalCount_challenge();
+        this.goodPointChallenge = dto.getGoodPoint_challenge();
+        this.giveChallenge = dto.getGiveCount_challenge();
+        this.user = user;
+
     }
 
     public void update(QuestDto dto){

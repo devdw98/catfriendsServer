@@ -7,6 +7,7 @@ import java.util.Map;
 
 public interface QuestService {
     public void initial(User user);
+    public void initialClientData(User user, int questLv, Boolean isQuestConversationEnd, QuestDto dto);
     public Map<String, Object> getQuestInfoDto(User user);
     public void storeQuestInfo(QuestDto dto, User user);
 }

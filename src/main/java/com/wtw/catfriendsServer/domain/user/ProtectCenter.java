@@ -3,6 +3,7 @@ package com.wtw.catfriendsServer.domain.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wtw.catfriendsServer.dto.ProtectCenterDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -49,6 +50,17 @@ public class ProtectCenter {
         this.maxTempCareCount = 50;
         this.curTempCareCount = 0;
         this.countOfAds = 10;
+    }
+
+    @Builder
+    public ProtectCenter(User user, ProtectCenterDto dto){
+        this.user = user;
+        this.currentPCIndex = dto.getCurrentPCIndex();
+        this.maxFriendCount = dto.getMaxFriendCount();
+        this.curFriendCount = dto.getCurFriendCount();
+        this.maxTempCareCount = dto.getMaxTempCareCount();
+        this.curTempCareCount = dto.getCurTempCareCount();
+        this.countOfAds = dto.getCountOfAds();
     }
 
     public void update(ProtectCenterDto dto){

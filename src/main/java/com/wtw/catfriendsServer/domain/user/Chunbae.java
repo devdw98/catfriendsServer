@@ -45,6 +45,14 @@ public class Chunbae {
         this.user = user;
     }
 
+    public Chunbae(User user, UserDto dto){
+        this.level = dto.getChunbaeLv();
+        this.stamina = dto.getStaminaDrinkAmount();
+        this.maxStamina = dto.getMaxStamina();
+        this.curStamina = dto.getCurStamina();
+        this.user = user;
+    }
+
     @Builder
     public Chunbae(int level, int stamina, int maxStamina, int curStamina, User user) {
         this.level = level;

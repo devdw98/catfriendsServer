@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface BaseService {
     public void initial(User user);
+    public void initialClientData(User user, UserDto dto);
     public Map<String, Object> getBaseInfoDto(User user);
     public void storeBaseInfoDto(UserDto dto, User user);
 }

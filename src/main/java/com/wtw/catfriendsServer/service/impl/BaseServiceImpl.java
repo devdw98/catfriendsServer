@@ -34,6 +34,31 @@ public class BaseServiceImpl implements BaseService {
     }
 
     @Override
+    public void initialClientData(User user, UserDto dto){
+        Chunbae chunbae = Chunbae.builder()
+                .level(dto.getChunbaeLv())
+                .stamina(dto.getStaminaDrinkAmount())
+                .maxStamina(dto.getMaxStamina())
+                .curStamina(dto.getMaxStamina())
+                .user(user).build();
+        Setting setting = Setting.builder()
+                .soundBg(dto.getSoundBgFloat())
+                .soundEf(dto.getSoundEffectFloat())
+                .vibration(dto.getVibration())
+                .language(dto.getLanguage())
+                .user(user)
+                .build();
+        RSPGame game = RSPGame.builder()
+                .winCount(dto.getRspGame().getWinCount())
+                .nyanCoin(dto.getRspGame().getNyanCoin())
+                .nyanNyaTicket(dto.getRspGame().getNyanNyaTicket())
+                .user(user).build();
+        chunbaeRepository.save(chunbae);
+        settingRepository.save(setting);
+        rspGameRepository.save(game);
+    }
+
+    @Override
     public Map<String, Object> getBaseInfoDto(User user) {
         Map<String, Object> map = new HashMap<>();
         map.put("chunbae", chunbaeRepository.findByUser(user));

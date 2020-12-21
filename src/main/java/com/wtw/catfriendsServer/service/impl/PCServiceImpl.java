@@ -19,6 +19,14 @@ public class PCServiceImpl implements PCService {
         pcRepository.save(new ProtectCenter(user));
     }
 
+    public void initialClientData(User user, ProtectCenterDto dto){
+        ProtectCenter pc = ProtectCenter.builder()
+                .user(user)
+                .dto(dto)
+                .build();
+        pcRepository.save(pc);
+    }
+
     @Override
     public ProtectCenterDto getPCInfoDto(User user) {
         ProtectCenter pc = pcRepository.findByUser(user);

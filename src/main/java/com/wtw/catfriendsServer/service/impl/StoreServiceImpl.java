@@ -30,6 +30,71 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public void initialClientData(User user, StoreDto dto){
+        Store store = null;
+        for(int i = 0; i < dto.getRemodelingLv().size(); i++){
+            switch(i){
+                case 0:
+                    store = Store.builder()
+                            .type(StoreType.CAFE)
+                            .remodelingLv(dto.getRemodelingLv().get(i))
+                            .isOpen(dto.getIsStoreOpen().get(i))
+                            .furnitureLv(dto.getCafeFurnitureLv())
+                            .furnitureProfit(dto.getCafeFurnitureProfit())
+                            .clickTime(dto.getStoreClickTime().get(i))
+                            .user(user)
+                            .build();
+                    break;
+                case 1:
+                    store = Store.builder()
+                            .type(StoreType.CHICKEN)
+                            .remodelingLv(dto.getRemodelingLv().get(i))
+                            .isOpen(dto.getIsStoreOpen().get(i))
+                            .furnitureLv(dto.getChickenFurnitureLv())
+                            .furnitureProfit(dto.getChickenFurnitureProfit())
+                            .clickTime(dto.getStoreClickTime().get(i))
+                            .user(user)
+                            .build();
+                    break;
+                case 2:
+                    store = Store.builder()
+                            .type(StoreType.GOPCHANG)
+                            .remodelingLv(dto.getRemodelingLv().get(i))
+                            .isOpen(dto.getIsStoreOpen().get(i))
+                            .furnitureLv(dto.getGopchangFurnitureLv())
+                            .furnitureProfit(dto.getGopchangFurnitureProfit())
+                            .clickTime(dto.getStoreClickTime().get(i))
+                            .user(user)
+                            .build();
+                    break;
+                case 3:
+                    store = Store.builder()
+                            .type(StoreType.HEALTH)
+                            .remodelingLv(dto.getRemodelingLv().get(i))
+                            .isOpen(dto.getIsStoreOpen().get(i))
+                            .furnitureLv(dto.getHealthFurnitureLv())
+                            .furnitureProfit(dto.getHealthFurnitureProfit())
+                            .clickTime(dto.getStoreClickTime().get(i))
+                            .user(user)
+                            .build();
+                    break;
+                case 4:
+                    store = Store.builder()
+                            .type(StoreType.THEATER)
+                            .remodelingLv(dto.getRemodelingLv().get(i))
+                            .isOpen(dto.getIsStoreOpen().get(i))
+                            .furnitureLv(dto.getTheaterFurnitureLv())
+                            .furnitureProfit(dto.getTheaterFurnitureProfit())
+                            .clickTime(dto.getStoreClickTime().get(i))
+                            .user(user)
+                            .build();
+                    break;
+            }
+            storeRepository.save(store);
+        }
+    }
+
+    @Override
     public StoreDto getStoreInfoDto(User user){
         List<Store> stores = storeRepository.findAllByUser(user);
         StoreDto result = new StoreDto();

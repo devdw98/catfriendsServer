@@ -5,6 +5,7 @@ import com.wtw.catfriendsServer.dto.StoreDto;
 
 public interface StoreService {
     public void initial(User user);
+    public void initialClientData(User user, StoreDto dto);
     public StoreDto getStoreInfoDto(User user);
     public void storeStores(StoreDto dto, User user);
 }

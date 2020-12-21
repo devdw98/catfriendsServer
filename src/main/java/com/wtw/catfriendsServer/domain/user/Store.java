@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wtw.catfriendsServer.domain.enums.StoreType;
 import com.wtw.catfriendsServer.dto.StoreDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Store")
@@ -77,6 +79,24 @@ public class Store {
         pr3 = 1f;
         pr4 = 1f;
         clickTime = LocalDateTime.now();
+    }
+
+    @Builder
+    public Store(StoreType type, Integer remodelingLv, Boolean isOpen,
+                 List<Integer> furnitureLv, List<Float> furnitureProfit, LocalDateTime clickTime, User user){
+        this.type = type;
+        this.remodelingLv = remodelingLv;
+        this.isOpen = isOpen;
+        lv1 = furnitureLv.get(0);
+        lv2 = furnitureLv.get(1);
+        lv3 = furnitureLv.get(2);
+        lv4 = furnitureLv.get(3);
+        pr1 = furnitureProfit.get(0);
+        pr2 = furnitureProfit.get(1);
+        pr3 = furnitureProfit.get(2);
+        pr4 = furnitureProfit.get(3);
+        this.clickTime = clickTime;
+        this.user = user;
     }
 
     public void update(StoreDto dto, StoreType type){

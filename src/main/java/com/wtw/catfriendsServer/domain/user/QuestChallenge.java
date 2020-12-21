@@ -3,6 +3,7 @@ package com.wtw.catfriendsServer.domain.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wtw.catfriendsServer.dto.QuestDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,6 +42,15 @@ public class QuestChallenge {
         this.goal = goal;
         this.isMax = false;
         this.count = 0;
+    }
+
+    @Builder
+    public QuestChallenge(Boolean isMax, Integer count, Integer limit, Integer goal, Quest quest){
+        this.isMax = isMax;
+        this.count = count;
+        this.limit = limit;
+        this.goal = goal;
+        this.quest = quest;
     }
 
     public void update(QuestDto dto, int index){

@@ -6,6 +6,7 @@ import com.wtw.catfriendsServer.domain.user.QuestChallenge;
 import com.wtw.catfriendsServer.domain.user.QuestDaily;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.QuestDto;
+import com.wtw.catfriendsServer.dto.UserDto;
 import com.wtw.catfriendsServer.repository.QuestChallengeRepository;
 import com.wtw.catfriendsServer.repository.QuestDailyRepository;
 import com.wtw.catfriendsServer.repository.QuestRepository;
@@ -55,6 +56,37 @@ public class QuestServiceImpl implements QuestService {
         challengeRepository.save(new QuestChallenge(quest, 5, 1));
         challengeRepository.save(new QuestChallenge(quest, 5, 1));
         challengeRepository.save(new QuestChallenge(quest, 15, 500));
+    }
+
+    @Override
+    public void initialClientData(User user, int questLv, Boolean isQuestConversationEnd, QuestDto dto){
+        Quest quest = Quest.builder()
+                .lv(questLv)
+                .isEnd(isQuestConversationEnd)
+                .dto(dto)
+                .user(user)
+                .build();
+        QuestDaily daily = null;
+        QuestChallenge challenge = null;
+
+        questRepository.save(quest);
+        for(int i = 0; i < dto.getIsMax_daily().size(); i++){
+            daily = QuestDaily.builder()
+                    .isMax(dto.getIsMax_daily().get(i))
+                    .isReceived(dto.getIsReceived_daily().get(i))
+                    .goal(dto.getGoal_daily().get(i))
+                    .quest(quest).build();
+            dailyRepository.save(daily);
+        }
+        for(int i = 0; i < dto.getIsMax_challenge().size(); i++){
+            challenge = QuestChallenge.builder()
+                    .isMax(dto.getIsMax_challenge().get(i))
+                    .count(dto.getCount_challenge().get(i))
+                    .limit(dto.getLimit_challenge().get(i))
+                    .goal(dto.getGoal_challenge().get(i))
+                    .quest(quest).build();
+            challengeRepository.save(challenge);
+        }
     }
 
     @Override

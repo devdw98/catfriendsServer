@@ -14,6 +14,8 @@ import java.util.List;
 public interface FriendService {
     public void initial(User user);
 
+    public void initialClientData(User user, List<CatDogDto> catdogs, List<AnimalDto> animals);
+
     public List<CatDogDto> getCatDogDtos(User user);
 
     public List<AnimalDto> getAnimalDtos(User user);
