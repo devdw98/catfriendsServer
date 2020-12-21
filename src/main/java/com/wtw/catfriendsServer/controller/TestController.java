@@ -1,7 +1,9 @@
 package com.wtw.catfriendsServer.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import com.wtw.catfriendsServer.dto.UserDto;
 import com.wtw.catfriendsServer.firebase.AuthService;
+import com.wtw.catfriendsServer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -54,6 +56,12 @@ public class TestController {
         }catch (FirebaseAuthException e){
             log.error(e.getErrorCode());
         }
-
     }
+
+    @PostMapping("/initial")
+    public ResponseEntity<?> getInitial(@RequestBody String str){
+        return new ResponseEntity<>(str, HttpStatus.OK);
+    }
+
+
 }
