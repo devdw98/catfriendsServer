@@ -23,7 +23,7 @@ public class QuestDto {
 
     private int touchCount_challenge;
     private int feverCount_challenge;
-    private int catCount_challenge;
+    private int catdogCount_challenge;
     private int catdogBatchCount_challenge;
     private int animalCount_challenge;
     private int goodPoint_challenge;

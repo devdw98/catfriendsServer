@@ -23,6 +23,8 @@ dependencies {
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
 
 	implementation 'com.google.firebase:firebase-admin:6.15.0'
+
+
 	implementation 'io.springfox:springfox-swagger2:2.6.1'
 	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 
@@ -36,6 +38,11 @@ dependencies {
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
 	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-androidpublisher
+	compile group: 'com.google.apis', name: 'google-api-services-androidpublisher', version: 'v3-rev142-1.25.0'
+    // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
+	compile group: 'com.google.api-client', name: 'google-api-client', version: '1.31.1'
+	compile 'com.google.cloud:google-cloud-storage:1.113.4'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'

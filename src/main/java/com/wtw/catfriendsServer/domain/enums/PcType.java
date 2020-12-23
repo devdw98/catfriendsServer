@@ -1,12 +1,12 @@
 package com.wtw.catfriendsServer.domain.enums;
 
-public enum  AnimalType {
-    CATDOG(1),
-    ANIMAL(0);
+public enum PcType {
+    FRIEND(0),
+    TEMP(1);
 
     private int typeNum;
 
-    AnimalType(int typeNum) {
+    PcType(int typeNum) {
         this.typeNum = typeNum;
     }
 }

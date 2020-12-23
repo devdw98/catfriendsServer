@@ -59,10 +59,10 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
-    public void initialClientData(User user, int questLv, Boolean isQuestConversationEnd, QuestDto dto){
+    public void initialClientData(User user, int questLv, Boolean isCompleteQuest, QuestDto dto){
         Quest quest = Quest.builder()
                 .lv(questLv)
-                .isEnd(isQuestConversationEnd)
+                .isEnd(isCompleteQuest)
                 .dto(dto)
                 .user(user)
                 .build();
@@ -133,14 +133,14 @@ public class QuestServiceImpl implements QuestService {
         result.setGoal_challenge(goal_challenge);
         result.setTouchCount_challenge(quest.getTouchChallenge());
         result.setFeverCount_challenge(quest.getFeverChallenge());
-        result.setCatCount_challenge(quest.getCatdogChallenge());
+        result.setCatdogCount_challenge(quest.getCatdogChallenge());
         result.setCatdogBatchCount_challenge(quest.getCatdogBatchChallenge());
         result.setAnimalCount_challenge(quest.getAnimalChallenge());
         result.setGoodPoint_challenge(quest.getGoodPointChallenge());
         result.setGiveCount_challenge(quest.getGiveChallenge());
         map.put("result", result);
         map.put("questLv", quest.getQuestLv());
-        map.put("isQuestConversationEnd", quest.getIsQuestConversationEnd());
+        map.put("isCompleteQuest", quest.getIsCompleteQuest());
         return map;
     }
 

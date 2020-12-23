@@ -9,14 +9,15 @@ import lombok.Data;
 @Data
 @Builder
 public class CatDogDto {
-    private String name;
+//    private String name;
     private int level;
     private Boolean isRetention;
-    private StoreType batchLocation;
+//    private StoreType batchLocation;
+    private int batchLocation;
 
     public CatDog toEntity(User user){
         CatDog entity = CatDog.builder()
-                .name(name)
+        //        .name(name)
                 .level(level)
                 .isRetention(isRetention)
                 .batchLocation(batchLocation)

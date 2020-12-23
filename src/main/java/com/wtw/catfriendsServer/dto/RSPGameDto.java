@@ -1,22 +1,17 @@
 package com.wtw.catfriendsServer.dto;
 
-import com.wtw.catfriendsServer.domain.user.RSPGame;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Builder
 public class RSPGameDto {
     private int winCount;
-    private int nyanNyaTicket;
-    private int nyanCoin;
+    private int test;
+//    private int nyanNyaTicket;
+//    private int nyanCoin;
 
-    public RSPGame toEntity(){
-        RSPGame entity = RSPGame.builder()
-                .winCount(winCount)
-                .nyanNyaTicket(nyanNyaTicket)
-                .nyanCoin(nyanCoin)
-                .build();
-        return entity;
-    }
 }

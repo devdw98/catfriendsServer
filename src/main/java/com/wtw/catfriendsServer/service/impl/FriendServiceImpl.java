@@ -24,7 +24,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void initial(User user){
-        catDogRepository.save(new CatDog(user, "나비"));
+   /*     catDogRepository.save(new CatDog(user, "나비"));
         catDogRepository.save(new CatDog(user,"김영철"));
         catDogRepository.save(new CatDog(user,"반휘혈"));
         catDogRepository.save(new CatDog(user,"최민수"));
@@ -34,33 +34,41 @@ public class FriendServiceImpl implements FriendService {
         catDogRepository.save(new CatDog(user,"쌍둥이 고양이 동생"));
         catDogRepository.save(new CatDog(user,"이수민"));
         catDogRepository.save(new CatDog(user,"박진형"));
-        catDogRepository.save(new CatDog(user,"남궁필두"));
+        catDogRepository.save(new CatDog(user,"남궁필두"));*/
 
-        animalRepository.save(new Animal(user, StoreType.CAFE));
-        animalRepository.save(new Animal(user, StoreType.CHICKEN));
-        animalRepository.save(new Animal(user, StoreType.GOPCHANG));
+    //    animalRepository.save(new Animal(user, StoreType.CAFE));
+    //    animalRepository.save(new Animal(user, StoreType.CHICKEN));
+    //    animalRepository.save(new Animal(user, StoreType.GOPCHANG));
     }
 
     @Override
     public void initialClientData(User user, List<CatDogDto> catdogs, List<AnimalDto> animals) {
         CatDog catdog = null;
         Animal animal = null;
+        int i = 0;
         for(CatDogDto d : catdogs){
+            System.out.println(d.getBatchLocation());
             catdog = CatDog.builder()
+                    .id(i)
                     .level(d.getLevel())
                     .isRetention(d.getIsRetention())
                     .batchLocation(d.getBatchLocation())
                     .user(user)
                     .build();
             catDogRepository.save(catdog);
+            i++;
         }
+        i = 0;
         for(AnimalDto d : animals){
             animal = Animal.builder()
+                    .id(i)
                     .level(d.getLevel())
                     .sortingOrder(d.getSortingOrder())
                     .isRetention(d.getIsRetention())
+                    .type(d.getType())
                     .build();
             animalRepository.save(animal);
+            i++;
         }
     }
 
@@ -86,12 +94,13 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void storeCatDogs(UserDto dto, User user) {
-        List<CatDogDto> catdogs = dto.getCatDog();
-        for(CatDogDto catDogDto : catdogs){
-            for(CatDog catDog : user.getCatDogs()){
-                if(catDogDto.getName().equals(catDog.getName())){
-                    catDog.update(catDogDto);
-                }
+        int i = 0;
+        List<CatDogDto> catdogDtos = dto.getCatdog();
+        List<CatDog> catdogs = user.getCatDogs();
+        for(CatDogDto catDogDto : catdogDtos){
+            if(catdogs.get(i).getUserCatdogId() == i){
+                catdogs.get(i).update(catDogDto);
+                i++;
             }
         }
 
@@ -99,12 +108,13 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void storeAnimals(UserDto dto, User user) {
-        List<AnimalDto> animals = dto.getAnimal();
-        for(AnimalDto animalDto : animals){
-            for(Animal animal : user.getAnimals()){
-                if(animalDto.getAnimalId().equals(animal.getId())){
-                    animal.update(animalDto);
-                }
+        int i = 0;
+        List<AnimalDto> animalDtos = dto.getAnimal();
+        List<Animal> animals = user.getAnimals();
+        for(AnimalDto animalDto : animalDtos){
+            if(animals.get(i).getUserAnimalId() == i){
+                animals.get(i).update(animalDto);
+                i++;
             }
         }
     }

@@ -8,11 +8,11 @@ public enum StoreType {
     HEALTH(4),
     THEATER(5);
 
-    private int typeNum;
-    StoreType (int num){this.typeNum = num;}
+    int typeNum;
+    StoreType(int num){this.typeNum = num;}
     public static StoreType fromNum(int num){
         for(StoreType type : values()){
-            if(type.ordinal() == num)
+            if(type.typeNum == num)
                 return type;
         }
         return null;

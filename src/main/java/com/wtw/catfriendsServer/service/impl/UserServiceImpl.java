@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.save(new User(uid, dto));
             baseService.initialClientData(user, dto);
             storeService.initialClientData(user, dto.getStore());
-            questService.initialClientData(user, dto.getQuestLv(), dto.getIsQuestConversationEnd(), dto.getQuest());
+            questService.initialClientData(user, dto.getQuestLv(), dto.getIsCompleteQuest(), dto.getQuest());
             pcService.initialClientData(user, dto.getProtectionCenter());
-            friendService.initialClientData(user, dto.getCatDog(), dto.getAnimal());
+            friendService.initialClientData(user, dto.getCatdog(), dto.getAnimal());
             return true;
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
@@ -120,12 +120,12 @@ public class UserServiceImpl implements UserService {
         result.setIsUsedCoupon(isUsedCoupon);
 
         result.setStore(storeService.getStoreInfoDto(user));
-        result.setRspGame((RSPGameDto)baseInfo.get("rspGame"));
+    //    result.setRspGame((RSPGameDto)baseInfo.get("rspGame"));
         result.setQuestLv((Integer)questInfo.get("questLv"));
-        result.setIsQuestConversationEnd((Boolean)questInfo.get("isQuestConversationEnd"));
+        result.setIsCompleteQuest((Boolean)questInfo.get("isCompleteQuest"));
         result.setQuest((QuestDto)questInfo.get("result"));
         result.setProtectionCenter(pcService.getPCInfoDto(user));
-        result.setCatDog(friendService.getCatDogDtos(user));
+        result.setCatdog(friendService.getCatDogDtos(user));
         result.setAnimal(friendService.getAnimalDtos(user));
     //    result.setMailList(mailService.getUserMailList(user));
         result.setMailList(mailService.getUserMailListExcludingDeleteMail(user));
