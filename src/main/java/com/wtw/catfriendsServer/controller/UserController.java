@@ -45,12 +45,21 @@ public class UserController {
     public ResponseEntity<?> join(@RequestHeader("uid") String uid, @RequestBody UserDto dto){ //회원가입
         String firebase;
         boolean result = false;
+<<<<<<< HEAD
+   //     try{
+       //     firebase = authService.getUser(uid).getUid();
+            result = userService.initialClientData(uid, dto);
+//        }catch (FirebaseAuthException e){
+//            log.error(e.getErrorCode());
+//        }
+=======
     //    try{
     //        firebase = authService.getUser(uid).getUid();
             result = userService.initialClientData(uid, dto);//firebase, dto);
    //     }catch (FirebaseAuthException e){
    //         log.error(e.getErrorCode());
     //    }
+>>>>>>> b760cb4eb81c978b9233422b2583e33578c1979a
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -44,32 +44,29 @@ public class TestController {
         }
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
-//
-//    @PostMapping("/firebase")
-//    public void getFirebase(@RequestBody String uid) throws FirebaseAuthException {
-//    //    service.getUser(uid);
-//        try{
-//            if(service.getUser(uid) == null){
-//                System.out.println("nulltest");
-//            }else{
-//
-//                System.out.println("successTest");
-//            }
-//        }catch (FirebaseAuthException e){
-//            log.error(e.getErrorCode());
-//        }
-//    }
-//
-//    @PostMapping("/initial")
-//    public ResponseEntity<?> getInitial(@RequestBody String str){
-//        return new ResponseEntity<>(str, HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/request")
-//    public ResponseEntity<?> postRequests(@RequestHeader("uid") String uid, @RequestBody TestDto dto){
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+
+
+    @PostMapping("/firebase")
+    public void getFirebase(@RequestBody String uid) throws FirebaseAuthException {
+    //    service.getUser(uid);
+        try{
+            if(service.getUser(uid) == null){
+                System.out.println("nulltest");
+            }else{
+
+                System.out.println("successTest");
+            }
+        }catch (FirebaseAuthException e){
+            log.error(e.getErrorCode());
+        }
+    }
+
+    @PostMapping(value = "/initial",produces = "application/json; charset=utf8")
+    public ResponseEntity<?> getInitial(@RequestBody String str){
+        System.out.println(str);
+        log.info("success");
+        return new ResponseEntity<>("success!!!!", HttpStatus.OK);
+    }
 
 
 }
