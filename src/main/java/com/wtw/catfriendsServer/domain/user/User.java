@@ -86,6 +86,10 @@ public class User {
     @JsonManagedReference
     private List<UserMail> mails;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Request> requests;
+
     public User(String uid) {
         this.uid = uid;
         this.money = 0;

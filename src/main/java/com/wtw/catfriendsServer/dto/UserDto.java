@@ -11,6 +11,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -43,6 +44,10 @@ public class UserDto {
     private ProtectCenterDto protectionCenter;//
     private List<CatDogDto> catdog;//
     private List<AnimalDto> animal;//
+    private Map<String, Integer> reqiestDict;
+    private List<RequestTimeDto> requestTimes;
+    private int requestCount;
+
     private List<UserMailDto> mailList;
 
     public User toEntity(String uid){
