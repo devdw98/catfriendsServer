@@ -9,5 +9,4 @@ public class CatfriendsServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CatfriendsServerApplication.class, args);
 	}
-
 }

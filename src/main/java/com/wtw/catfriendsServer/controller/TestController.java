@@ -58,9 +58,11 @@ public class TestController {
         }
     }
 
-    @PostMapping("/initial")
+    @PostMapping(value = "/initial",produces = "application/json; charset=utf8")
     public ResponseEntity<?> getInitial(@RequestBody String str){
-        return new ResponseEntity<>(str, HttpStatus.OK);
+        System.out.println(str);
+        log.info("success");
+        return new ResponseEntity<>("success!!!!", HttpStatus.OK);
     }
 
 

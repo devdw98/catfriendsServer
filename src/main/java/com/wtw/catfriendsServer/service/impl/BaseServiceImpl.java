@@ -44,7 +44,7 @@ public class BaseServiceImpl implements BaseService {
         Setting setting = Setting.builder()
                 .soundBg(dto.getSoundBgFloat())
                 .soundEf(dto.getSoundEffectFloat())
-                .vibration(dto.getVibration())
+                .vibration(false)
                 .language(dto.getLanguage())
                 .user(user)
                 .build();
