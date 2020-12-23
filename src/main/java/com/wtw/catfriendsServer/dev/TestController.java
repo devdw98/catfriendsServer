@@ -1,8 +1,9 @@
-package com.wtw.catfriendsServer.controller;
+package com.wtw.catfriendsServer.dev;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.wtw.catfriendsServer.dto.UserDto;
 import com.wtw.catfriendsServer.firebase.AuthService;
+import com.wtw.catfriendsServer.service.RequestService;
 import com.wtw.catfriendsServer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class TestController {
 
     private final AuthService service;
+    private final RequestService requestService;
 
     @GetMapping
     public ResponseEntity<?> getTestUrl(){
@@ -42,26 +44,32 @@ public class TestController {
         }
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
-
-    @PostMapping("/firebase")
-    public void getFirebase(@RequestBody String uid) throws FirebaseAuthException {
-    //    service.getUser(uid);
-        try{
-            if(service.getUser(uid) == null){
-                System.out.println("nulltest");
-            }else{
-
-                System.out.println("successTest");
-            }
-        }catch (FirebaseAuthException e){
-            log.error(e.getErrorCode());
-        }
-    }
-
-    @PostMapping("/initial")
-    public ResponseEntity<?> getInitial(@RequestBody String str){
-        return new ResponseEntity<>(str, HttpStatus.OK);
-    }
+//
+//    @PostMapping("/firebase")
+//    public void getFirebase(@RequestBody String uid) throws FirebaseAuthException {
+//    //    service.getUser(uid);
+//        try{
+//            if(service.getUser(uid) == null){
+//                System.out.println("nulltest");
+//            }else{
+//
+//                System.out.println("successTest");
+//            }
+//        }catch (FirebaseAuthException e){
+//            log.error(e.getErrorCode());
+//        }
+//    }
+//
+//    @PostMapping("/initial")
+//    public ResponseEntity<?> getInitial(@RequestBody String str){
+//        return new ResponseEntity<>(str, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/request")
+//    public ResponseEntity<?> postRequests(@RequestHeader("uid") String uid, @RequestBody TestDto dto){
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 
 }

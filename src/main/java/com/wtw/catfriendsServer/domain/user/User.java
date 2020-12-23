@@ -1,6 +1,7 @@
 package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.wtw.catfriendsServer.domain.user.pc.ProtectCenter;
 import com.wtw.catfriendsServer.dto.UserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,10 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "User")
@@ -88,7 +86,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private List<Request> requests;
+    private List<UserRequest> userRequests;
 
     public User(String uid) {
         this.uid = uid;

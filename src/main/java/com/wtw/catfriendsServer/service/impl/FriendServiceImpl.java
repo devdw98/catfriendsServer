@@ -66,6 +66,7 @@ public class FriendServiceImpl implements FriendService {
                     .sortingOrder(d.getSortingOrder())
                     .isRetention(d.getIsRetention())
                     .type(d.getType())
+                    .user(user)
                     .build();
             animalRepository.save(animal);
             i++;

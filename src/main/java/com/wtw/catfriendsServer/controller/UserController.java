@@ -58,14 +58,15 @@ public class UserController {
     public ResponseEntity<?> login(@RequestHeader("uid") String uid){
         String firebase;
         UserDto result;
-        try{
-            firebase = authService.getUser(uid).getUid();
-            result = userService.getUser(firebase);
+//        try{
+//            firebase = authService.getUser(uid).getUid();
+//            result = userService.getUser(firebase);
+        result = userService.getUser(uid);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (FirebaseAuthException e){
-            log.error(e.getErrorCode());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+//        }catch (FirebaseAuthException e){
+//            log.error(e.getErrorCode());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
     }
 
 

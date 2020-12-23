@@ -1,12 +1,10 @@
 package com.wtw.catfriendsServer.service.impl;
 
 import com.wtw.catfriendsServer.domain.user.*;
+import com.wtw.catfriendsServer.dto.NyanNyaLandDto;
 import com.wtw.catfriendsServer.dto.QuestDto;
 import com.wtw.catfriendsServer.dto.RSPGameDto;
 import com.wtw.catfriendsServer.dto.UserDto;
-import com.wtw.catfriendsServer.repository.ChunbaeRepository;
-import com.wtw.catfriendsServer.repository.RSPGameRepository;
-import com.wtw.catfriendsServer.repository.SettingRepository;
 import com.wtw.catfriendsServer.repository.UserRepository;
 import com.wtw.catfriendsServer.service.*;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final PCService pcService;
     private final FriendService friendService;
     private final MailService mailService;
+    private final RequestService requestService;
 
     @Transactional
     @Override
@@ -57,6 +56,7 @@ public class UserServiceImpl implements UserService {
             questService.initialClientData(user, dto.getQuestLv(), dto.getIsCompleteQuest(), dto.getQuest());
             pcService.initialClientData(user, dto.getProtectionCenter());
             friendService.initialClientData(user, dto.getCatdog(), dto.getAnimal());
+            requestService.initialClientData(user, dto.getRequestDict(), dto.getRequestTimes());
             return true;
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String uid){
         User user = userRepository.findByUid(uid);
         UserDto result = getDto(user);
+
         log.info("Successful get User Data!: "+uid);
         return result;
     }
@@ -89,6 +90,7 @@ public class UserServiceImpl implements UserService {
         pcService.storePCInfo(req.getProtectionCenter(), user);
         questService.storeQuestInfo(req.getQuest(), user);
         mailService.storeUserMailData(req.getMailList(), user);
+
 
         userRepository.save(user);
 
@@ -120,7 +122,8 @@ public class UserServiceImpl implements UserService {
         result.setIsUsedCoupon(isUsedCoupon);
 
         result.setStore(storeService.getStoreInfoDto(user));
-    //    result.setRspGame((RSPGameDto)baseInfo.get("rspGame"));
+        result.setRspGame((RSPGameDto)baseInfo.get("rspGame"));
+        result.setNyanNyaLand((NyanNyaLandDto)baseService.getBaseInfoDto(user).get("nyanNya"));
         result.setQuestLv((Integer)questInfo.get("questLv"));
         result.setIsCompleteQuest((Boolean)questInfo.get("isCompleteQuest"));
         result.setQuest((QuestDto)questInfo.get("result"));
@@ -129,6 +132,10 @@ public class UserServiceImpl implements UserService {
         result.setAnimal(friendService.getAnimalDtos(user));
     //    result.setMailList(mailService.getUserMailList(user));
         result.setMailList(mailService.getUserMailListExcludingDeleteMail(user));
+
+        result.setRequestDict(requestService.getRequestDict(user));
+        result.setRequestTimes(requestService.getRequestTimes(user));
+        result.setRequestCount(result.getRequestTimes().size());
 
         return result;
     }

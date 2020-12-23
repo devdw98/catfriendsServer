@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class UserDto {
     private ProtectCenterDto protectionCenter;//
     private List<CatDogDto> catdog;//
     private List<AnimalDto> animal;//
-    private Map<String, Integer> reqiestDict;
+    private Map<String, Integer> requestDict;
     private List<RequestTimeDto> requestTimes;
     private int requestCount;
 

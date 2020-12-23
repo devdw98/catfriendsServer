@@ -1,6 +1,8 @@
-package com.wtw.catfriendsServer.domain.user;
+package com.wtw.catfriendsServer.domain.user.pc;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.ProtectCenterDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,6 +43,10 @@ public class ProtectCenter {
     @JoinColumn(name = "USER_ID")
     @JsonBackReference
     private User user;
+
+    @OneToOne(mappedBy = "pc")
+    @JsonManagedReference
+    private PcClickTime clickTime;
 
     public ProtectCenter(User user){
         this.user = user;

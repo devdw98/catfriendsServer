@@ -1,5 +1,6 @@
 package com.wtw.catfriendsServer.controller;
 
+import com.wtw.catfriendsServer.dev.TestController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

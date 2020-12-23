@@ -6,14 +6,12 @@ import com.wtw.catfriendsServer.domain.user.Setting;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.UserDto;
 import com.wtw.catfriendsServer.repository.ChunbaeRepository;
-import com.wtw.catfriendsServer.repository.RSPGameRepository;
+import com.wtw.catfriendsServer.repository.NyanNyaLandRepository;
 import com.wtw.catfriendsServer.repository.SettingRepository;
 import com.wtw.catfriendsServer.service.BaseService;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +22,13 @@ import java.util.Map;
 public class BaseServiceImpl implements BaseService {
     private final ChunbaeRepository chunbaeRepository;
     private final SettingRepository settingRepository;
-    private final RSPGameRepository rspGameRepository;
+    private final NyanNyaLandRepository nyanNyaLandRepository;
 
     @Override
     public void initial(User user) {
         chunbaeRepository.save(new Chunbae(user));
         settingRepository.save(new Setting(user));
-        rspGameRepository.save(new NyanNyaLand(user));
+        nyanNyaLandRepository.save(new NyanNyaLand(user));
     }
 
     @Override
@@ -55,15 +53,17 @@ public class BaseServiceImpl implements BaseService {
                 .user(user).build();
         chunbaeRepository.save(chunbae);
         settingRepository.save(setting);
-        rspGameRepository.save(land);
+        nyanNyaLandRepository.save(land);
     }
 
     @Override
     public Map<String, Object> getBaseInfoDto(User user) {
         Map<String, Object> map = new HashMap<>();
+        NyanNyaLand nyanNya = nyanNyaLandRepository.findByUser(user);
         map.put("chunbae", chunbaeRepository.findByUser(user));
         map.put("setting", settingRepository.findByUser(user));
-        map.put("rspGame", rspGameRepository.findByUser(user).toDto());
+        map.put("rspGame", nyanNya.toRspGameDto());
+        map.put("nyanNya", nyanNya.toNyanNyaDto());
         return map;
     }
 

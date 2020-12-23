@@ -1,6 +1,7 @@
 package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.wtw.catfriendsServer.dto.NyanNyaLandDto;
 import com.wtw.catfriendsServer.dto.RSPGameDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,11 +40,19 @@ public class NyanNyaLand {
         this.nyanCoin = 0;
         this.user = user;
     }
-    public RSPGameDto toDto(){
+    public RSPGameDto toRspGameDto(){
         RSPGameDto dto = RSPGameDto.builder()
                 .winCount(getWinCount())
         //        .nyanNyaTicket(getNyanNyaTicket())
         //        .nyanCoin(getNyanCoin())
+                .build();
+        return dto;
+    }
+
+    public NyanNyaLandDto toNyanNyaDto(){
+        NyanNyaLandDto dto = NyanNyaLandDto.builder()
+                .coin(getNyanCoin())
+                .ticket(getNyanNyaTicket())
                 .build();
         return dto;
     }
