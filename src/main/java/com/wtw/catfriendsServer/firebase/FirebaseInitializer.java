@@ -20,7 +20,7 @@ import java.io.IOException;
 @NoArgsConstructor
 public class FirebaseInitializer {
     private static final Logger log = LoggerFactory.getLogger(FirebaseInitializer.class);
-    private static final String FIREBASE_CONFIG_PATH = "wtw-test.json";//"wtw-dev-firebase-adminsdk.json";
+    private static final String FIREBASE_CONFIG_PATH = "wtw-firebase-meow.json";// "wtw-test.json";
 
 //    @Value("${spring.datasource.username}")
 //    private String firebaseConfigPath;

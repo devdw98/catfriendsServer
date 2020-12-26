@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final BaseService baseService;
+    private final NyanNyaLandService nyanNyaLandService;
     private final UserCouponService userCouponService;
     private final StoreService storeService;
     private final QuestService questService;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final FriendService friendService;
     private final MailService mailService;
     private final RequestService requestService;
+    private final UserShopService userShopService;
 
     @Transactional
     @Override
@@ -52,11 +54,15 @@ public class UserServiceImpl implements UserService {
         try{
             User user = userRepository.save(new User(uid, dto));
             baseService.initialClientData(user, dto);
+            nyanNyaLandService.initialClientData(user, dto);
             storeService.initialClientData(user, dto.getStore());
             questService.initialClientData(user, dto.getQuestLv(), dto.getIsCompleteQuest(), dto.getQuest());
             pcService.initialClientData(user, dto.getProtectionCenter());
-            friendService.initialClientData(user, dto.getCatdog(), dto.getAnimal());
+            friendService.initialClientData(user, dto.getCatdog(), dto.getAnimal(), dto.getProtectionCenter().getPcClickTime(),
+                    dto.getProtectionCenter().getUsedNumOfAnimals(), dto.getProtectionCenter().getStepOfSellList());
             requestService.initialClientData(user, dto.getRequestDict(), dto.getRequestTimes());
+            userShopService.initialClientData(user, dto.getShop());
+            userCouponService.initialClientData(user, dto.getCouponNumber());
             return true;
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
@@ -78,19 +84,25 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    public User getUserForMails(String uid){
+        return userRepository.findByUid(uid);
+    }
+
     @Override
     public UserDto storeUser(String uid, UserDto req){
         User user = userRepository.findByUid(uid);
         user.update(req);
         baseService.storeBaseInfoDto(req, user);
+        nyanNyaLandService.storeNyanNyaInfo(user, req.getRspGame(), req.getNyanNyaLand());
+        storeService.storeStores(req.getStore(), user);
+        questService.storeQuestInfo(req.getQuestLv(), req.getIsCompleteQuest(), req.getQuest(), user);
+        pcService.storePCInfo(req.getProtectionCenter(), user);
         friendService.storeCatDogs(req, user);
         friendService.storeAnimals(req, user);
-        storeService.storeStores(req.getStore(), user);
+        requestService.storeRequests(req.getRequestTimes(), req.getRequestDict(), user);
+        userShopService.storeShopData(user, req.getShop());
         userCouponService.storeUserCoupon(req, user);
-        pcService.storePCInfo(req.getProtectionCenter(), user);
-        questService.storeQuestInfo(req.getQuest(), user);
-        mailService.storeUserMailData(req.getMailList(), user);
-
+//        mailService.storeUserMailData(req.getMailList(), user);
 
         userRepository.save(user);
 
@@ -103,6 +115,7 @@ public class UserServiceImpl implements UserService {
         List<String> couponNumber = new ArrayList<>();
         List<Boolean> isUsedCoupon = new ArrayList<>();
         Map<String, Object> baseInfo = baseService.getBaseInfoDto(user);
+        Map<String, Object> nyanNyaInfo = nyanNyaLandService.getNyanNyaInfoDto(user);
         Map<String, Object> questInfo = questService.getQuestInfoDto(user);
 
         UserDto result = user.toDto();
@@ -122,20 +135,19 @@ public class UserServiceImpl implements UserService {
         result.setIsUsedCoupon(isUsedCoupon);
 
         result.setStore(storeService.getStoreInfoDto(user));
-        result.setRspGame((RSPGameDto)baseInfo.get("rspGame"));
-        result.setNyanNyaLand((NyanNyaLandDto)baseService.getBaseInfoDto(user).get("nyanNya"));
+        result.setRspGame((RSPGameDto)nyanNyaInfo.get("rspGame"));
+        result.setNyanNyaLand((NyanNyaLandDto)nyanNyaInfo.get("nyanNya"));
         result.setQuestLv((Integer)questInfo.get("questLv"));
         result.setIsCompleteQuest((Boolean)questInfo.get("isCompleteQuest"));
         result.setQuest((QuestDto)questInfo.get("result"));
         result.setProtectionCenter(pcService.getPCInfoDto(user));
         result.setCatdog(friendService.getCatDogDtos(user));
         result.setAnimal(friendService.getAnimalDtos(user));
-    //    result.setMailList(mailService.getUserMailList(user));
-        result.setMailList(mailService.getUserMailListExcludingDeleteMail(user));
 
         result.setRequestDict(requestService.getRequestDict(user));
         result.setRequestTimes(requestService.getRequestTimes(user));
         result.setRequestCount(result.getRequestTimes().size());
+        result.setShop(userShopService.getShopDto(user));
 
         return result;
     }

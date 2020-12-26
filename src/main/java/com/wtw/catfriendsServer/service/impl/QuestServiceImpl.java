@@ -120,10 +120,11 @@ public class QuestServiceImpl implements QuestService {
         result.setIsMax_daily(isMax_daily);
         result.setIsReceived_daily(isReceived_daily);
         result.setGoal_daily(goal_daily);
+
         result.setClearAllQuestCount_daily(quest.getClearAll());
-        result.setAttend_daily(quest.getAttend());
-        result.setFurnitureUpgrade_daily(quest.getFurnitureUpgrade());
-        result.setChunbaeLvUp_daily(quest.getChunbaeLvUp());
+        result.setAttend_daily(quest.getAttendDaily());
+        result.setRoamerTouch_daily(quest.getRoamerTouchDaily());
+        result.setNyangnaland_daily(quest.getNyangnaLandTouchDaily());
         result.setTouch_daily(quest.getTouchDaily());
         result.setCustomerTouch_daily(quest.getCustomerTouchDaily());
 
@@ -131,13 +132,17 @@ public class QuestServiceImpl implements QuestService {
         result.setCount_challenge(count_challenge);
         result.setLimit_challenge(limit_challenge);
         result.setGoal_challenge(goal_challenge);
+
         result.setTouchCount_challenge(quest.getTouchChallenge());
         result.setFeverCount_challenge(quest.getFeverChallenge());
-        result.setCatdogCount_challenge(quest.getCatdogChallenge());
+        result.setUnlockStore_challenge(quest.getUnlockStoreChallenge());
+        result.setAnimalLvCount_challenge(quest.getAnimalLvChallenge());
+        result.setAbsentMoney_challenge(quest.getAbsentMoneyChallenge());
         result.setCatdogBatchCount_challenge(quest.getCatdogBatchChallenge());
-        result.setAnimalCount_challenge(quest.getAnimalChallenge());
         result.setGoodPoint_challenge(quest.getGoodPointChallenge());
         result.setGiveCount_challenge(quest.getGiveChallenge());
+        result.setRoamerTouch_challenge(quest.getRoamerTouchChallenge());
+
         map.put("result", result);
         map.put("questLv", quest.getQuestLv());
         map.put("isCompleteQuest", quest.getIsCompleteQuest());
@@ -145,9 +150,9 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
-    public void storeQuestInfo(QuestDto dto, User user) {
+    public void storeQuestInfo(int lv, Boolean isComplete, QuestDto dto, User user) {
         int i = 0;
-        user.getQuest().update(dto);
+        user.getQuest().update(lv, isComplete, dto);
         for(QuestDaily daily : user.getQuest().getDaily()){
             daily.update(dto, i);
             i++;

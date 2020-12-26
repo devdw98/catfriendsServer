@@ -5,7 +5,7 @@ public enum RewardType {
     DIA(1),    // 1 : 다이아
     MONEY(2),  // 2 : 돈
     HEART(3),  // 3 : 선행포인트
-    DRAW(4),   // 4 : 뽑기
+    DRAW(4),   // 4 : 뽑기(냥멍인)
     PACK(5);   // 5 : 팩
 
     private int typeNum;

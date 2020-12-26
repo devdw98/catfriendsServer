@@ -6,10 +6,7 @@ import com.wtw.catfriendsServer.domain.RewardInfo;
 import com.wtw.catfriendsServer.domain.enums.RewardType;
 import com.wtw.catfriendsServer.dto.RewardDto;
 import com.wtw.catfriendsServer.dto.UserMailDto;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -50,6 +47,44 @@ public class UserMail {
     @Column(name = "READ_TIME", columnDefinition = "DATETIME default now()")
   //  @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime readTime; //메일 읽은 시간
+
+    @Builder
+    public UserMail(User user, Mail mail) {
+        this.user = user;
+        this.mail = mail;
+        this.isRead = false;
+        this.isDelete = false;
+        this.receivedTime = LocalDateTime.now();
+        this.readTime = LocalDateTime.now();
+    }
+
+    public UserMailDto toDto(String productCode){
+        List<RewardDto> rewardDtoList = new ArrayList<>();
+        boolean isNotice = false;
+        int count = 0;
+        for(RewardInfo d : getMail().getRewards()){
+            rewardDtoList.add(d.toDto());
+            if(d.getType().equals(RewardType.NOTICE) || d.getType().equals(RewardType.DRAW) || d.getType().equals(RewardType.PACK))
+                isNotice = true;
+        }
+        if(isNotice)
+            count = 0;
+        else count = rewardDtoList.size();
+
+        UserMailDto dto = UserMailDto.builder()
+                .id(getMail().getId())
+                .title(getMail().getTitle())
+                .content(getMail().getContent())
+                .rewards(rewardDtoList)
+                .rewardCount(count)
+                .receivedTime(getReceivedTime())
+                .readTime(getReadTime())
+                .read(getIsRead())
+                .delete(getIsDelete())
+                .productCode(productCode)
+                .build();
+        return dto;
+    }
 
     public UserMailDto toDto(){
         List<RewardDto> rewardDtoList = new ArrayList<>();

@@ -18,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -31,35 +33,29 @@ public class UserController {
     @GetMapping("/check")
     public ResponseEntity<?> checkUser(@RequestHeader("uid") String uid){ //중복체크
         String firebase;
-        boolean result = false;
-        try{
-            firebase = authService.getUser(uid).getUid();
-            result = userService.checkDuplicateUser(firebase);
-        }catch (FirebaseAuthException e){
-            log.error(e.getErrorCode());
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Map<String, Boolean> map = new HashMap<>();
+
+//        try{
+//            firebase = authService.getUser(uid).getUid();
+            map.put("check",userService.checkDuplicateUser(uid));
+//        }catch (FirebaseAuthException e){
+//            log.error(e.getErrorCode());
+//        }
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> join(@RequestHeader("uid") String uid, @RequestBody UserDto dto){ //회원가입
         String firebase;
         boolean result = false;
-<<<<<<< HEAD
-   //     try{
-       //     firebase = authService.getUser(uid).getUid();
-            result = userService.initialClientData(uid, dto);
-//        }catch (FirebaseAuthException e){
-//            log.error(e.getErrorCode());
-//        }
-=======
+
     //    try{
     //        firebase = authService.getUser(uid).getUid();
             result = userService.initialClientData(uid, dto);//firebase, dto);
    //     }catch (FirebaseAuthException e){
    //         log.error(e.getErrorCode());
     //    }
->>>>>>> b760cb4eb81c978b9233422b2583e33578c1979a
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -78,6 +74,20 @@ public class UserController {
 //        }
     }
 
+    @GetMapping("/firebase")
+    public ResponseEntity<?> firebaseLogin(@RequestHeader("uid") String uid){
+        String firebase;
+        UserDto result;
+        try{
+            firebase = authService.getUser(uid).getUid();
+            result = userService.getUser(firebase);
+        result = userService.getUser(uid);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (FirebaseAuthException e){
+            log.error(e.getErrorCode());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PutMapping
     public ResponseEntity<?> storeUser(@RequestHeader("uid") String uid, @RequestBody UserDto dto){

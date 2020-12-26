@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.wtw'
-version = '0.0.1-SNAPSHOT-20201213'
+version = '0.0.1-SNAPSHOT-20201227'
 sourceCompatibility = '8'
 
 configurations {

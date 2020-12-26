@@ -1,6 +1,7 @@
 package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.wtw.catfriendsServer.domain.Request;
 import com.wtw.catfriendsServer.domain.enums.RequestType;
 import com.wtw.catfriendsServer.dto.RequestTimeDto;
 import lombok.AccessLevel;
@@ -10,8 +11,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "USER_REQUEST")
@@ -34,7 +33,10 @@ public class UserRequest { //의뢰
 
     @Column(name = "TYPE")
     @Enumerated
-    private RequestType type;
+    private RequestType type; //time의 type
+
+    @Column(name = "STATUS")
+    private RequestType status; //dict의 타입
 
     @Column(name = "RECEIVED_TIME")
     private LocalDateTime receivedTime;
@@ -47,17 +49,18 @@ public class UserRequest { //의뢰
     @JsonBackReference
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "REQUEST_ID")
     private Request request;
 
     @Builder
-    public UserRequest(int sibligIdx, int sortingOrder, String str, RequestType type,
+    public UserRequest(int sibligIdx, int sortingOrder, String str, RequestType type, RequestType status,
                        LocalDateTime receivedTime, LocalDateTime completeTime, User user, Request request) {
         this.sibligIdx = sibligIdx;
         this.sortingOrder = sortingOrder;
         this.str = str;
         this.type = type;
+        this.status = status;
         this.receivedTime = receivedTime;
         this.completeTime = completeTime;
         this.user = user;
@@ -74,5 +77,15 @@ public class UserRequest { //의뢰
                 .completeTime(getCompleteTime())
                 .build();
         return dto;
+    }
+
+    public void update(RequestTimeDto dto, RequestType status){
+        this.sibligIdx = dto.getSibligIdx();
+        this.sortingOrder = dto.getSortingOrder();
+        this.str = dto.getStr();
+        this.type = dto.getRequestType();
+        this.status = status;
+        this.receivedTime = dto.getReceivedTime();
+        this.completeTime = dto.getCompleteTime();
     }
 }

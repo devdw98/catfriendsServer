@@ -19,4 +19,5 @@ public class UserMailDto {
     private LocalDateTime readTime;
     private Boolean read;
     private Boolean delete;
+    private String productCode;
 }

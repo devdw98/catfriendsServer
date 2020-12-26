@@ -2,6 +2,7 @@ package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,6 +29,7 @@ public class UserCoupon {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @Builder
     public UserCoupon(String number, User user) {
         this.number = number;
         this.isUsed = false;

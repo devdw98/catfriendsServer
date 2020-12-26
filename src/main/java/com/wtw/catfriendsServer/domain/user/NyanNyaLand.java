@@ -26,6 +26,12 @@ public class NyanNyaLand {
     @Column(name = "COIN")
     private int nyanCoin;
 
+    @Column(name = "NYANPAE")
+    private int nyangPae;
+
+    @Column(name = "JOKBO")
+    private int jokbo;
+
     @Column(name = "WIN_COUNT")
     private int winCount;
 
@@ -43,8 +49,6 @@ public class NyanNyaLand {
     public RSPGameDto toRspGameDto(){
         RSPGameDto dto = RSPGameDto.builder()
                 .winCount(getWinCount())
-        //        .nyanNyaTicket(getNyanNyaTicket())
-        //        .nyanCoin(getNyanCoin())
                 .build();
         return dto;
     }
@@ -53,21 +57,27 @@ public class NyanNyaLand {
         NyanNyaLandDto dto = NyanNyaLandDto.builder()
                 .coin(getNyanCoin())
                 .ticket(getNyanNyaTicket())
+                .Nyangpae(getNyangPae())
+                .jokbo(getJokbo())
                 .build();
         return dto;
     }
 
     @Builder
-    public NyanNyaLand(int winCount, int nyanNyaTicket, int nyanCoin, User user) {
+    public NyanNyaLand(int winCount, int nyanNyaTicket, int nyanCoin, int nyangPae, int jokbo, User user) {
         this.winCount = winCount;
         this.nyanNyaTicket = nyanNyaTicket;
         this.nyanCoin = nyanCoin;
+        this.nyangPae = nyangPae;
+        this.jokbo = jokbo;
         this.user = user;
     }
 
-    public void update(RSPGameDto dto){
-        this.winCount = dto.getWinCount();
-    //    this.nyanCoin = dto.getNyanCoin();
-    //    this.nyanNyaTicket = dto.getNyanNyaTicket();
+    public void update(RSPGameDto gameDto, NyanNyaLandDto landDto){
+        this.winCount = gameDto.getWinCount();
+        this.nyanCoin = landDto.getCoin();
+        this.nyanNyaTicket = landDto.getTicket();
+        this.nyangPae = landDto.getNyangpae();
+        this.jokbo = landDto.getJokbo();
     }
 }

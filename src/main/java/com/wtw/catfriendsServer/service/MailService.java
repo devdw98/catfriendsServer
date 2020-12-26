@@ -24,4 +24,7 @@ public interface MailService {
     public List<MailDto> getMailList();
 
     public List<UserMailDto> updateUserMailListDeleteInitial(User user);
+
+    //상품 사기
+    public boolean getPaidProduct(User user, String productCode);
 }

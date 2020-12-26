@@ -7,6 +7,7 @@ import com.wtw.catfriendsServer.dto.UserDto;
 import java.util.List;
 
 public interface UserCouponService {
+    public void initialClientData(User user, List<String> couponNumber);
     public List<UserCoupon> getUserCoupon(User user);
     public void storeUserCoupon(UserDto dto, User user);
 }

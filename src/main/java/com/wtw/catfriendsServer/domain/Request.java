@@ -1,10 +1,14 @@
-package com.wtw.catfriendsServer.domain.user;
+package com.wtw.catfriendsServer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wtw.catfriendsServer.domain.enums.RequestType;
+import com.wtw.catfriendsServer.domain.user.UserRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "REQUEST")
@@ -19,6 +23,7 @@ public class Request {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "STORE")
-    private int store; //어느 가게의 의뢰인지 requestDict의 숫자
+    @OneToMany(mappedBy = "request")
+    @JsonIgnore
+    private List<UserRequest> userRequests;
 }

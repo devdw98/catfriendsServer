@@ -21,6 +21,15 @@ public class UserCouponServiceImpl implements UserCouponService {
         userCouponRepository.save(coupon);
     }
 
+    public void initialClientData(User user, List<String> couponNumber){
+        UserCoupon coupon;
+        for(String number : couponNumber){
+            coupon = UserCoupon.builder()
+                    .number(number).user(user).build();
+            userCouponRepository.save(coupon);
+        }
+    }
+
     @Override
     public List<UserCoupon> getUserCoupon(User user){
         return userCouponRepository.findAllByUser(user);

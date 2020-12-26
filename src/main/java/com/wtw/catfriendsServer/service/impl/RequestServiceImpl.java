@@ -1,6 +1,7 @@
 package com.wtw.catfriendsServer.service.impl;
 
-import com.wtw.catfriendsServer.domain.user.Request;
+import com.wtw.catfriendsServer.domain.Request;
+import com.wtw.catfriendsServer.domain.enums.RequestType;
 import com.wtw.catfriendsServer.domain.user.UserRequest;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.RequestTimeDto;
@@ -22,46 +23,48 @@ public class RequestServiceImpl implements RequestService {
     private final UserRequestRepository userRequestRepository;
 
     @Override
-    public void initialClientData(User user, Map<String, Integer> requestDict, List<RequestTimeDto> timeDto) {
+    public void initialClientData(User user, Map<String, RequestType> requestDict, List<RequestTimeDto> timeDto) {
         int i = 0;
         UserRequest result;
+        RequestTimeDto dto;
         List<Request> requests = requestRepository.findAll();
         List<Request> clients = new ArrayList<>();
+        List<RequestType> dictTypes = new ArrayList<>();
         for(Request request : requests){
             if(requestDict.containsKey(request.getContent())){
                 clients.add(request);
+                dictTypes.add(requestDict.get(request.getContent()));
             }
         }
         System.out.println(clients.size());
+        System.out.println("timeDto:"+timeDto.size());
 
-        for(RequestTimeDto dto : timeDto){
-            result = UserRequest.builder()
-                    .sibligIdx(dto.getSibligIdx())
-                    .sortingOrder(dto.getSortingOrder())
-                    .str(dto.getStr())
-                    .type(dto.getRequestType())
-                    .receivedTime(dto.getReceivedTime())
-                    .completeTime(dto.getCompleteTime())
-                    .user(user)
-                    .request(clients.get(i))
-                    .build();
-            userRequestRepository.save(result);
-            i++;
-        }
+//        for(i = 0; i < timeDto.size(); i++){
+//            dto = timeDto.get(i);
+//            result = UserRequest.builder()
+//                    .sibligIdx(dto.getSibligIdx())
+//                    .sortingOrder(dto.getSortingOrder())
+//                    .str(dto.getStr())
+//                    .type(dto.getRequestType())
+//                    .status(dictTypes.get(i))
+//                    .receivedTime(dto.getReceivedTime())
+//                    .completeTime(dto.getCompleteTime())
+//                    .user(user)
+//                    .request(clients.get(i))
+//                    .build();
+//            userRequestRepository.save(result);
+//        }
 
     }
 
     @Override
-    public Map<String, Integer> getRequestDict(User user){
-        Map<String, Integer> result = new LinkedHashMap<>();
-        List<Request> requests = new ArrayList<>();
+    public Map<String, RequestType> getRequestDict(User user){
+        Map<String, RequestType> result = new LinkedHashMap<>();
         List<UserRequest> userReqs = userRequestRepository.findAllByUser(user);
         for(UserRequest userReq : userReqs){
-            requests.add(userReq.getRequest());
+            result.put(userReq.getRequest().getContent(), userReq.getStatus());
         }
-        for(Request req : requests){
-            result.put(req.getContent(), req.getStore());
-        }
+
         return result;
     }
 
@@ -72,5 +75,13 @@ public class RequestServiceImpl implements RequestService {
             result.add(req.toDto());
         }
         return result;
+    }
+
+    public void storeRequests(List<RequestTimeDto> dtos, Map<String, RequestType> map, User user){
+        int i = 0;
+        for(UserRequest userRequest : user.getUserRequests()){
+            userRequest.update(dtos.get(i), map.get(userRequest.getRequest().getContent()));
+            i++;
+        }
     }
 }

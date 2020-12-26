@@ -2,6 +2,7 @@ package com.wtw.catfriendsServer.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.wtw.catfriendsServer.domain.enums.Language;
+import com.wtw.catfriendsServer.domain.enums.RequestType;
 import com.wtw.catfriendsServer.domain.user.Chunbae;
 import com.wtw.catfriendsServer.domain.user.Setting;
 import com.wtw.catfriendsServer.domain.user.User;
@@ -45,11 +46,13 @@ public class UserDto {
     private ProtectCenterDto protectionCenter;//
     private List<CatDogDto> catdog;//
     private List<AnimalDto> animal;//
-    private Map<String, Integer> requestDict;
-    private List<RequestTimeDto> requestTimes;
-    private int requestCount;
+    private Map<String, RequestType> requestDict;//
+    private List<RequestTimeDto> requestTimes;//
+    private int requestCount;//
+//    private List<?> shopItemDict; //뭔지 꼭 물어보기!
+    private ShopDto shop;
 
-    private List<UserMailDto> mailList;
+//    private List<UserMailDto> mailList;
 
     public User toEntity(String uid){
         User entity = User.builder()

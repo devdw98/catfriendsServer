@@ -1,6 +1,8 @@
 package com.wtw.catfriendsServer.service.impl;
 
 import com.wtw.catfriendsServer.domain.Mail;
+import com.wtw.catfriendsServer.domain.RewardInfo;
+import com.wtw.catfriendsServer.domain.enums.RewardType;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.domain.user.UserMail;
 import com.wtw.catfriendsServer.dto.MailDto;
@@ -37,17 +39,33 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public List<UserMailDto> getUserMailListExcludingDeleteMail(User user) {
+        boolean isProduct = false;
+        int breakPoint = 0;
+
         List<UserMail> list = userMailRepository.findAllByUserAndIsDelete(user, false);
         List<UserMailDto> result = new ArrayList<>();
-        for(UserMail m : list)
-            result.add(m.toDto());
+        for(UserMail m : list) {
+            List<RewardInfo> rewards = m.getMail().getRewards();
+            for (RewardInfo r : rewards) {
+                if (r.getType() == RewardType.DRAW || r.getType() == RewardType.PACK) {
+                    isProduct = true;
+                    break;
+                }
+                breakPoint++;
+            }
+            if(isProduct){
+                result.add(m.toDto(m.getMail().getProductCode()));
+            }else{
+                result.add(m.toDto(" "));
+            }
+        }
+
         return result;
     }
 
     @Override
     @Transactional
     public void storeUserMailData(List<UserMailDto> dto, User user) {
-    //    List<UserMail> entity = userMailRepository.findAllByUser(user);
         for(UserMailDto d : dto){
             for(UserMail m : user.getMails()){
                 if(d.getId().equals(m.getMail().getId()))
@@ -76,5 +94,17 @@ public class MailServiceImpl implements MailService {
             result.add(m.toDto());
         }*/
         return result;
+    }
+
+    public boolean getPaidProduct(User user, String productCode){
+        Mail mail = mailRepository.findByProductCode(productCode);
+        UserMail userMail = UserMail.builder()
+                .mail(mail)
+                .user(user)
+                .build();
+        if(userMailRepository.save(userMail)!=null){
+            return true;
+        }
+        return false;
     }
 }

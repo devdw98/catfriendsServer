@@ -8,4 +8,6 @@ import lombok.Data;
 public class NyanNyaLandDto {
     private int coin;
     private int ticket;
+    private int Nyangpae;
+    private int jokbo;
 }

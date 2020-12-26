@@ -31,13 +31,13 @@ public class Quest {
     private int clearAll;
 
     @Column(name = "DAILY_ATTEND")
-    private int attend;
+    private int attendDaily;
 
-    @Column(name = "DAILY_FURNITURE_UPGRADE")
-    private int furnitureUpgrade;
+    @Column(name = "DAILY_ROAMER")
+    private int roamerTouchDaily;
 
-    @Column(name = "DAILY_CHUNBAE_LvUp")
-    private int chunbaeLvUp;
+    @Column(name = "DAILY_NYANGNYALAND")
+    private int nyangnaLandTouchDaily;
 
     @Column(name = "DAILY_TOUCH")
     private int touchDaily;
@@ -51,20 +51,26 @@ public class Quest {
     @Column(name = "CHALLENGE_FEVER")
     private int feverChallenge;
 
-    @Column(name = "CHALLENGE_CATDOG")
-    private int catdogChallenge;
+    @Column(name = "CHALLENGE_UNLOCK_STORE")
+    private int unlockStoreChallenge;
+
+    @Column(name = "CHALLENGE_ANIMAL_LV")
+    private int animalLvChallenge;
+
+    @Column(name = "CHALLENGE_ABSENT_MONEY")
+    private int absentMoneyChallenge;
 
     @Column(name = "CHALLENGE_CATDOG_BATCH")
     private int catdogBatchChallenge;
-
-    @Column(name = "CHALLENGE_ANIMAL")
-    private int animalChallenge;
 
     @Column(name = "CHALLENGE_GOODPOINT")
     private int goodPointChallenge;
 
     @Column(name = "CHALLENGE_GIVE")
     private int giveChallenge;
+
+    @Column(name = "CHALLENGE_ROAMER_TOUCH")
+    private int roamerTouchChallenge;
 
     @OneToOne
     @JoinColumn(name = "USER_ID")
@@ -83,16 +89,13 @@ public class Quest {
         this.questLv = 1;
         this.isCompleteQuest = false;
         this.clearAll = 0;
-        this.attend = 1;
-        this.furnitureUpgrade = 0;
-        this.chunbaeLvUp = 0;
+        this.attendDaily = 1;
         this.touchDaily = 0;
         this.customerTouchDaily = 0;
         this.touchChallenge = 0;
         this.feverChallenge = 0;
-        this.catdogChallenge = 0;
+        this.animalLvChallenge = 0;
         this.catdogBatchChallenge = 0;
-        this.animalChallenge = 0;
         this.goodPointChallenge = 0;
         this.giveChallenge = 0;
         this.user = user;
@@ -103,35 +106,43 @@ public class Quest {
         this.questLv = lv;
         this.isCompleteQuest = isEnd;
         this.clearAll = dto.getClearAllQuestCount_daily();
-        this.attend = dto.getAttend_daily();
-        this.furnitureUpgrade = dto.getFurnitureUpgrade_daily();
-        this.chunbaeLvUp = dto.getChunbaeLvUp_daily();
+        this.attendDaily = dto.getAttend_daily();
+        this.roamerTouchDaily = dto.getRoamerTouch_daily();
+        this.nyangnaLandTouchDaily = dto.getNyangnaland_daily();
         this.touchDaily = dto.getTouch_daily();
         this.customerTouchDaily = dto.getCustomerTouch_daily();
         this.touchChallenge = dto.getTouchCount_challenge();
         this.feverChallenge = dto.getFeverCount_challenge();
-        this.catdogChallenge = dto.getCatdogCount_challenge();
+        this.unlockStoreChallenge = dto.getUnlockStore_challenge();
+        this.animalLvChallenge = dto.getAnimalLvCount_challenge();
+        this.absentMoneyChallenge = dto.getAbsentMoney_challenge();
         this.catdogBatchChallenge = dto.getCatdogBatchCount_challenge();
-        this.animalChallenge = dto.getAnimalCount_challenge();
+
         this.goodPointChallenge = dto.getGoodPoint_challenge();
         this.giveChallenge = dto.getGiveCount_challenge();
+        this.roamerTouchChallenge = dto.getRoamerTouch_challenge();
         this.user = user;
 
     }
 
-    public void update(QuestDto dto){
+    public void update(int lv,Boolean isComplete,QuestDto dto){
+        this.questLv = lv;
+        this.isCompleteQuest = isComplete;
         this.clearAll = dto.getClearAllQuestCount_daily();
-        this.attend = dto.getAttend_daily();
-        this.furnitureUpgrade = dto.getFurnitureUpgrade_daily();
-        this.chunbaeLvUp = dto.getChunbaeLvUp_daily();
+        this.attendDaily = dto.getAttend_daily();
+        this.roamerTouchDaily = dto.getRoamerTouch_daily();
+        this.nyangnaLandTouchDaily = dto.getNyangnaland_daily();
+
         this.touchDaily = dto.getTouch_daily();
         this.customerTouchDaily = dto.getCustomerTouch_daily();
         this.touchChallenge = dto.getTouchCount_challenge();
         this.feverChallenge = dto.getFeverCount_challenge();
-        this.catdogChallenge = dto.getCatdogCount_challenge();
+        this.unlockStoreChallenge = dto.getUnlockStore_challenge();
+        this.animalLvChallenge = dto.getAnimalLvCount_challenge();
+        this.absentMoneyChallenge = dto.getAbsentMoney_challenge();
         this.catdogBatchChallenge = dto.getCatdogBatchCount_challenge();
-        this.animalChallenge = dto.getAnimalCount_challenge();
         this.goodPointChallenge = dto.getGoodPoint_challenge();
         this.giveChallenge = dto.getGiveCount_challenge();
+        this.roamerTouchChallenge = dto.getRoamerTouch_challenge();
     }
 }

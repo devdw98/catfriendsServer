@@ -1,7 +1,6 @@
 package com.wtw.catfriendsServer.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.wtw.catfriendsServer.domain.user.pc.ProtectCenter;
 import com.wtw.catfriendsServer.dto.UserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -62,7 +61,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade={CascadeType.ALL})
     @JsonManagedReference
-    private NyanNyaLand rsp;
+    private NyanNyaLand nyanNyaLand;
 
     @OneToOne(mappedBy = "user")
     @JsonManagedReference
@@ -78,7 +77,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private List<Animal> animals;
+    private List<UserAnimal> userAnimals;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -87,6 +86,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<UserRequest> userRequests;
+
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    private UserShop shop;
 
     public User(String uid) {
         this.uid = uid;

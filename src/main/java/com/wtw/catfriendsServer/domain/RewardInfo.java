@@ -26,6 +26,7 @@ public class RewardInfo {
     @Column(name = "DEGREE")
     private Long degree; //보상 정도
 
+
     public RewardDto toDto(){
         RewardDto dto = RewardDto.builder()
                 .type(getType())

@@ -26,6 +26,9 @@ public class Mail {
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
+    @Column(name = "PRODUCT_CODE")
+    private String productCode;
+
     @ManyToMany
     @JoinTable(name = "MAIL_REWARDS",
             joinColumns = @JoinColumn(name = "MAIL_ID"),

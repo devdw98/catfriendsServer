@@ -1,18 +1,18 @@
 package com.wtw.catfriendsServer.service.impl;
 
-import com.wtw.catfriendsServer.domain.enums.StoreType;
-import com.wtw.catfriendsServer.domain.user.Animal;
+import com.wtw.catfriendsServer.domain.user.UserAnimal;
 import com.wtw.catfriendsServer.domain.user.CatDog;
 import com.wtw.catfriendsServer.domain.user.User;
 import com.wtw.catfriendsServer.dto.AnimalDto;
 import com.wtw.catfriendsServer.dto.CatDogDto;
 import com.wtw.catfriendsServer.dto.UserDto;
-import com.wtw.catfriendsServer.repository.AnimalRepository;
+import com.wtw.catfriendsServer.repository.UserAnimalRepository;
 import com.wtw.catfriendsServer.repository.CatDogRepository;
 import com.wtw.catfriendsServer.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
     private final CatDogRepository catDogRepository;
-    private final AnimalRepository animalRepository;
+    private final UserAnimalRepository userAnimalRepository;
 
     @Override
     public void initial(User user){
@@ -42,12 +42,11 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void initialClientData(User user, List<CatDogDto> catdogs, List<AnimalDto> animals) {
+    public void initialClientData(User user, List<CatDogDto> catdogs, List<AnimalDto> animals, List<LocalDateTime> clickTimes, List<Integer> usedNumOfAnimals, List<Integer> stepOfSells) {
         CatDog catdog = null;
-        Animal animal = null;
+        UserAnimal userAnimal = null;
         int i = 0;
         for(CatDogDto d : catdogs){
-            System.out.println(d.getBatchLocation());
             catdog = CatDog.builder()
                     .id(i)
                     .level(d.getLevel())
@@ -60,15 +59,19 @@ public class FriendServiceImpl implements FriendService {
         }
         i = 0;
         for(AnimalDto d : animals){
-            animal = Animal.builder()
+            userAnimal = UserAnimal.builder()
                     .id(i)
                     .level(d.getLevel())
                     .sortingOrder(d.getSortingOrder())
                     .isRetention(d.getIsRetention())
+                    .retentionEffect(d.getRetentionEffect())
                     .type(d.getType())
+                    .clickTime(clickTimes.get(i))
+                    .usedAnimal(usedNumOfAnimals.get(i))
+                    .stepOfSell(stepOfSells.get(i))
                     .user(user)
                     .build();
-            animalRepository.save(animal);
+            userAnimalRepository.save(userAnimal);
             i++;
         }
     }
@@ -86,8 +89,8 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<AnimalDto> getAnimalDtos(User user) {
         List<AnimalDto> result = new ArrayList<>();
-        List<Animal> animals = animalRepository.findAllByUser(user);
-        for(Animal c : animals){
+        List<UserAnimal> userAnimals = userAnimalRepository.findAllByUser(user);
+        for(UserAnimal c : userAnimals){
             result.add(c.toDto());
         }
         return result;
@@ -111,10 +114,13 @@ public class FriendServiceImpl implements FriendService {
     public void storeAnimals(UserDto dto, User user) {
         int i = 0;
         List<AnimalDto> animalDtos = dto.getAnimal();
-        List<Animal> animals = user.getAnimals();
+        List<UserAnimal> userAnimals = user.getUserAnimals();
+        List<LocalDateTime> clickTimes = dto.getProtectionCenter().getPcClickTime();
+        List<Integer> usedNumOfAnimals = dto.getProtectionCenter().getUsedNumOfAnimals();
+        List<Integer> stepOfSells = dto.getProtectionCenter().getStepOfSellList();
         for(AnimalDto animalDto : animalDtos){
-            if(animals.get(i).getUserAnimalId() == i){
-                animals.get(i).update(animalDto);
+            if(userAnimals.get(i).getUserAnimalId() == i){
+                userAnimals.get(i).update(animalDto,clickTimes.get(i), usedNumOfAnimals.get(i), stepOfSells.get(i));
                 i++;
             }
         }
